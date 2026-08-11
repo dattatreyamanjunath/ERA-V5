@@ -1,0 +1,382 @@
+{
+  "content_hash": "73142de9f87944bfca5696a54482cc89fd715bc88dfdaac790a78c6d22ee7e86",
+  "created_at": "frozen",
+  "doc_count": 92,
+  "lane": "verified-pdf",
+  "manifest_hash": "525e85769e36cc164ccc3b905442de4ae0fe550823c191990a1624d45ad45730",
+  "offsets": {
+    "verified:pdf-000403": [
+      0,
+      319
+    ],
+    "verified:pdf-000405": [
+      319,
+      578
+    ],
+    "verified:pdf-000406": [
+      578,
+      1029
+    ],
+    "verified:pdf-000407": [
+      1029,
+      1380
+    ],
+    "verified:pdf-000408": [
+      1380,
+      1762
+    ],
+    "verified:pdf-000410": [
+      1762,
+      2202
+    ],
+    "verified:pdf-000412": [
+      2202,
+      2597
+    ],
+    "verified:pdf-000413": [
+      2597,
+      3090
+    ],
+    "verified:pdf-000414": [
+      3090,
+      3530
+    ],
+    "verified:pdf-000415": [
+      3530,
+      3903
+    ],
+    "verified:pdf-000416": [
+      3903,
+      4361
+    ],
+    "verified:pdf-000417": [
+      4361,
+      4890
+    ],
+    "verified:pdf-000418": [
+      4890,
+      5387
+    ],
+    "verified:pdf-000419": [
+      5387,
+      5790
+    ],
+    "verified:pdf-000421": [
+      5790,
+      6203
+    ],
+    "verified:pdf-000424": [
+      6203,
+      6664
+    ],
+    "verified:pdf-000425": [
+      6664,
+      7104
+    ],
+    "verified:pdf-000427": [
+      7104,
+      7379
+    ],
+    "verified:pdf-000428": [
+      7379,
+      7901
+    ],
+    "verified:pdf-000429": [
+      7901,
+      8445
+    ],
+    "verified:pdf-000430": [
+      8445,
+      8946
+    ],
+    "verified:pdf-000431": [
+      8946,
+      9373
+    ],
+    "verified:pdf-000432": [
+      9373,
+      9712
+    ],
+    "verified:pdf-000433": [
+      9712,
+      10090
+    ],
+    "verified:pdf-000434": [
+      10090,
+      10469
+    ],
+    "verified:pdf-000435": [
+      10469,
+      10855
+    ],
+    "verified:pdf-000436": [
+      10855,
+      11206
+    ],
+    "verified:pdf-000438": [
+      11206,
+      11511
+    ],
+    "verified:pdf-000439": [
+      11511,
+      12036
+    ],
+    "verified:pdf-000440": [
+      12036,
+      12434
+    ],
+    "verified:pdf-000441": [
+      12434,
+      12797
+    ],
+    "verified:pdf-000445": [
+      12797,
+      13161
+    ],
+    "verified:pdf-000447": [
+      13161,
+      13644
+    ],
+    "verified:pdf-000448": [
+      13644,
+      14162
+    ],
+    "verified:pdf-000449": [
+      14162,
+      14611
+    ],
+    "verified:pdf-000450": [
+      14611,
+      14877
+    ],
+    "verified:pdf-000452": [
+      14877,
+      15193
+    ],
+    "verified:pdf-000453": [
+      15193,
+      15449
+    ],
+    "verified:pdf-000454": [
+      15449,
+      15735
+    ],
+    "verified:pdf-000455": [
+      15735,
+      16081
+    ],
+    "verified:pdf-000456": [
+      16081,
+      16585
+    ],
+    "verified:pdf-000457": [
+      16585,
+      16894
+    ],
+    "verified:pdf-000459": [
+      16894,
+      17337
+    ],
+    "verified:pdf-000460": [
+      17337,
+      17903
+    ],
+    "verified:pdf-000461": [
+      17903,
+      18136
+    ],
+    "verified:pdf-000462": [
+      18136,
+      18450
+    ],
+    "verified:pdf-000463": [
+      18450,
+      18911
+    ],
+    "verified:pdf-000464": [
+      18911,
+      19299
+    ],
+    "verified:pdf-000465": [
+      19299,
+      19718
+    ],
+    "verified:pdf-000469": [
+      19718,
+      20274
+    ],
+    "verified:pdf-000470": [
+      20274,
+      20804
+    ],
+    "verified:pdf-000471": [
+      20804,
+      21256
+    ],
+    "verified:pdf-000472": [
+      21256,
+      21729
+    ],
+    "verified:pdf-000474": [
+      21729,
+      22184
+    ],
+    "verified:pdf-000476": [
+      22184,
+      22610
+    ],
+    "verified:pdf-000477": [
+      22610,
+      22876
+    ],
+    "verified:pdf-000478": [
+      22876,
+      23125
+    ],
+    "verified:pdf-000479": [
+      23125,
+      23456
+    ],
+    "verified:pdf-000480": [
+      23456,
+      23982
+    ],
+    "verified:pdf-000481": [
+      23982,
+      24340
+    ],
+    "verified:pdf-000482": [
+      24340,
+      24749
+    ],
+    "verified:pdf-000483": [
+      24749,
+      25296
+    ],
+    "verified:pdf-000484": [
+      25296,
+      25664
+    ],
+    "verified:pdf-000485": [
+      25664,
+      26160
+    ],
+    "verified:pdf-000487": [
+      26160,
+      26563
+    ],
+    "verified:pdf-000488": [
+      26563,
+      26849
+    ],
+    "verified:pdf-000490": [
+      26849,
+      27381
+    ],
+    "verified:pdf-000491": [
+      27381,
+      27935
+    ],
+    "verified:pdf-000492": [
+      27935,
+      28272
+    ],
+    "verified:pdf-000493": [
+      28272,
+      28709
+    ],
+    "verified:pdf-000494": [
+      28709,
+      29155
+    ],
+    "verified:pdf-000495": [
+      29155,
+      29597
+    ],
+    "verified:pdf-000496": [
+      29597,
+      30139
+    ],
+    "verified:pdf-000497": [
+      30139,
+      30539
+    ],
+    "verified:pdf-000498": [
+      30539,
+      31033
+    ],
+    "verified:pdf-000499": [
+      31033,
+      31291
+    ],
+    "verified:pdf-000500": [
+      31291,
+      31782
+    ],
+    "verified:pdf-000501": [
+      31782,
+      32217
+    ],
+    "verified:pdf-000502": [
+      32217,
+      32793
+    ],
+    "verified:pdf-000503": [
+      32793,
+      33112
+    ],
+    "verified:pdf-000504": [
+      33112,
+      33545
+    ],
+    "verified:pdf-000505": [
+      33545,
+      34126
+    ],
+    "verified:pdf-000506": [
+      34126,
+      34564
+    ],
+    "verified:pdf-000507": [
+      34564,
+      34942
+    ],
+    "verified:pdf-000508": [
+      34942,
+      35308
+    ],
+    "verified:pdf-000509": [
+      35308,
+      35825
+    ],
+    "verified:pdf-000512": [
+      35825,
+      36402
+    ],
+    "verified:pdf-000514": [
+      36402,
+      36733
+    ],
+    "verified:pdf-000515": [
+      36733,
+      37139
+    ],
+    "verified:pdf-000516": [
+      37139,
+      37650
+    ],
+    "verified:pdf-000519": [
+      37650,
+      38165
+    ],
+    "verified:pdf-000520": [
+      38165,
+      38469
+    ]
+  },
+  "parent_manifest_hash": "6e71956771f47105fadccd3f7539e72b9689d785bead9f0b5f17faf898298f9b",
+  "role": "TRAIN",
+  "shard_id": "shard-TRAIN-verified-pdf",
+  "token_count": 38469,
+  "tokenizer_hash": "d718985853c9d24ce52392b5a4c9cdee803c3450459af64a9043fb15b31da13d"
+}

@@ -1,0 +1,406 @@
+{
+  "content_hash": "45a67ac035dbfdfe40d38a9efd72f92063922eacb3a850101fcc76beb40029fc",
+  "created_at": "frozen",
+  "doc_count": 98,
+  "lane": "proxy",
+  "manifest_hash": "8a3c0126cc6a6f6c01f5158de2527e2b7421cf8a4c2219a2ce63df7e9c9f9a03",
+  "offsets": {
+    "synthetic:x-000747": [
+      0,
+      62
+    ],
+    "synthetic:x-000778": [
+      62,
+      195
+    ],
+    "synthetic:x-000781": [
+      195,
+      302
+    ],
+    "synthetic:x-000807": [
+      302,
+      433
+    ],
+    "synthetic:x-000814": [
+      433,
+      521
+    ],
+    "synthetic:x-000815": [
+      521,
+      629
+    ],
+    "synthetic:x-000816": [
+      629,
+      678
+    ],
+    "synthetic:x-000817": [
+      678,
+      746
+    ],
+    "synthetic:x-000821": [
+      746,
+      830
+    ],
+    "synthetic:x-000829": [
+      830,
+      954
+    ],
+    "synthetic:x-000840": [
+      954,
+      1048
+    ],
+    "synthetic:x-000845": [
+      1048,
+      1138
+    ],
+    "synthetic:x-000848": [
+      1138,
+      1236
+    ],
+    "synthetic:x-000856": [
+      1236,
+      1335
+    ],
+    "synthetic:x-000858": [
+      1335,
+      1449
+    ],
+    "synthetic:x-000868": [
+      1449,
+      1497
+    ],
+    "synthetic:x-000873": [
+      1497,
+      1563
+    ],
+    "synthetic:x-000878": [
+      1563,
+      1661
+    ],
+    "synthetic:x-000894": [
+      1661,
+      1800
+    ],
+    "unverified:x-000530": [
+      1800,
+      1890
+    ],
+    "unverified:x-000542": [
+      1890,
+      2030
+    ],
+    "unverified:x-000557": [
+      2030,
+      2104
+    ],
+    "unverified:x-000570": [
+      2104,
+      2159
+    ],
+    "unverified:x-000571": [
+      2159,
+      2297
+    ],
+    "unverified:x-000575": [
+      2297,
+      2335
+    ],
+    "unverified:x-000603": [
+      2335,
+      2490
+    ],
+    "unverified:x-000609": [
+      2490,
+      2560
+    ],
+    "unverified:x-000613": [
+      2560,
+      2634
+    ],
+    "unverified:x-000619": [
+      2634,
+      2678
+    ],
+    "unverified:x-000621": [
+      2678,
+      2745
+    ],
+    "unverified:x-000632": [
+      2745,
+      2873
+    ],
+    "unverified:x-000643": [
+      2873,
+      3002
+    ],
+    "unverified:x-000652": [
+      3002,
+      3089
+    ],
+    "unverified:x-000668": [
+      3089,
+      3168
+    ],
+    "unverified:x-000669": [
+      3168,
+      3283
+    ],
+    "unverified:x-000675": [
+      3283,
+      3327
+    ],
+    "unverified:x-000676": [
+      3327,
+      3410
+    ],
+    "unverified:x-000679": [
+      3410,
+      3466
+    ],
+    "unverified:x-000683": [
+      3466,
+      3517
+    ],
+    "unverified:x-000686": [
+      3517,
+      3565
+    ],
+    "unverified:x-000690": [
+      3565,
+      3638
+    ],
+    "unverified:x-000712": [
+      3638,
+      3742
+    ],
+    "verified:pdf-000401": [
+      3742,
+      4176
+    ],
+    "verified:pdf-000404": [
+      4176,
+      4463
+    ],
+    "verified:pdf-000411": [
+      4463,
+      4755
+    ],
+    "verified:pdf-000423": [
+      4755,
+      5094
+    ],
+    "verified:pdf-000442": [
+      5094,
+      5538
+    ],
+    "verified:pdf-000446": [
+      5538,
+      6075
+    ],
+    "verified:pdf-000458": [
+      6075,
+      6562
+    ],
+    "verified:pdf-000467": [
+      6562,
+      7055
+    ],
+    "verified:pdf-000475": [
+      7055,
+      7525
+    ],
+    "verified:pdf-000486": [
+      7525,
+      7897
+    ],
+    "verified:pdf-000489": [
+      7897,
+      8259
+    ],
+    "verified:pdf-000510": [
+      8259,
+      8566
+    ],
+    "verified:pdf-000511": [
+      8566,
+      8834
+    ],
+    "verified:speech-000226": [
+      8834,
+      8865
+    ],
+    "verified:speech-000231": [
+      8865,
+      8893
+    ],
+    "verified:speech-000239": [
+      8893,
+      8949
+    ],
+    "verified:speech-000244": [
+      8949,
+      8976
+    ],
+    "verified:speech-000251": [
+      8976,
+      8992
+    ],
+    "verified:speech-000254": [
+      8992,
+      9008
+    ],
+    "verified:speech-000278": [
+      9008,
+      9024
+    ],
+    "verified:speech-000291": [
+      9024,
+      9040
+    ],
+    "verified:speech-000300": [
+      9040,
+      9069
+    ],
+    "verified:speech-000307": [
+      9069,
+      9096
+    ],
+    "verified:speech-000313": [
+      9096,
+      9127
+    ],
+    "verified:speech-000317": [
+      9127,
+      9157
+    ],
+    "verified:speech-000325": [
+      9157,
+      9173
+    ],
+    "verified:speech-000327": [
+      9173,
+      9220
+    ],
+    "verified:speech-000344": [
+      9220,
+      9249
+    ],
+    "verified:speech-000359": [
+      9249,
+      9278
+    ],
+    "verified:speech-000381": [
+      9278,
+      9322
+    ],
+    "verified:speech-000389": [
+      9322,
+      9371
+    ],
+    "verified:speech-000395": [
+      9371,
+      9412
+    ],
+    "verified:web-000011": [
+      9412,
+      9515
+    ],
+    "verified:web-000017": [
+      9515,
+      9606
+    ],
+    "verified:web-000028": [
+      9606,
+      9653
+    ],
+    "verified:web-000045": [
+      9653,
+      9745
+    ],
+    "verified:web-000055": [
+      9745,
+      9802
+    ],
+    "verified:web-000068": [
+      9802,
+      9881
+    ],
+    "verified:web-000073": [
+      9881,
+      9991
+    ],
+    "verified:web-000079": [
+      9991,
+      10081
+    ],
+    "verified:web-000096": [
+      10081,
+      10198
+    ],
+    "verified:web-000101": [
+      10198,
+      10310
+    ],
+    "verified:web-000117": [
+      10310,
+      10409
+    ],
+    "verified:web-000121": [
+      10409,
+      10450
+    ],
+    "verified:web-000142": [
+      10450,
+      10542
+    ],
+    "verified:web-000154": [
+      10542,
+      10611
+    ],
+    "verified:web-000155": [
+      10611,
+      10736
+    ],
+    "verified:web-000156": [
+      10736,
+      10843
+    ],
+    "verified:web-000175": [
+      10843,
+      10919
+    ],
+    "verified:web-000178": [
+      10919,
+      11009
+    ],
+    "verified:web-000182": [
+      11009,
+      11104
+    ],
+    "verified:web-000183": [
+      11104,
+      11180
+    ],
+    "verified:web-000186": [
+      11180,
+      11261
+    ],
+    "verified:web-000187": [
+      11261,
+      11365
+    ],
+    "verified:web-000189": [
+      11365,
+      11405
+    ],
+    "verified:web-000203": [
+      11405,
+      11462
+    ]
+  },
+  "parent_manifest_hash": "aee3495e9d54fc41bf76672e415edaa31fd592a7b48d531d512720ce087015c1",
+  "role": "PROXY",
+  "shard_id": "shard-PROXY",
+  "token_count": 11462,
+  "tokenizer_hash": "d718985853c9d24ce52392b5a4c9cdee803c3450459af64a9043fb15b31da13d"
+}

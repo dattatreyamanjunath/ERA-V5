@@ -1,0 +1,35 @@
+[02:34:47] === TDES V5 demo starting ===
+[02:34:47] master_seed=1337
+[02:34:47] Building corpus context (load, dedup, roles, tokenizer, shards, packing)...
+[02:35:14] corpus documents survived dedup: 900, quarantined: 1, exact_duplicates_dropped: 1
+[02:35:14] [PASS] tokenizer_hash_verified -- freeze_hash=d718985853c9d24c
+[02:35:14] [PASS] manifests_validated -- root_hash=6a30c360672d2549e567f7a921ab04a716839b52d20ad8d8035eaed4d67bc373
+[02:35:14] [PASS] eval_shard_blocked -- shard 'shard-EVAL-sealed' has role 'EVAL', not TRAIN; blocked from loss-bearing consumption
+[02:35:14] genesis checkpoint saved: submission_artifacts/checkpoints/root_step0.json hash=2f71a7a0a33be23e
+[02:35:14] mixture schedule compiled: stage1=stage1_verified_only, lanes=('verified-web', 'verified-speech', 'verified-pdf')
+[02:35:40] step=3 validation avg_loss=6.2998 (stage=stage2_plus_unverified)
+[02:35:40] [STAGE_ADVANCE] step=3: stage1_verified_only -> stage2_plus_unverified (step_count_fallback (step_in_stage=12 >= 8))
+[02:36:00] step=4 avg_loss=6.3179 n_seq=4
+[02:36:05] checkpoint saved: submission_artifacts/checkpoints/root_step6.json (step=6, hash=d9e64015a1525673)
+[02:36:05] step=6 validation avg_loss=6.2800 (stage=stage3_plus_synthetic)
+[02:36:05] [STAGE_ADVANCE] step=6: stage2_plus_unverified -> stage3_plus_synthetic (step_count_fallback (step_in_stage=12 >= 8))
+[02:36:41] step=9 validation avg_loss=6.2596 (stage=stage3_plus_synthetic)
+[02:36:43] step=9 avg_loss=6.2975 n_seq=4
+[02:36:56] checkpoint saved: submission_artifacts/checkpoints/root_step12.json (step=12, hash=ca9c79aea2cd98b1)
+[02:36:56] step=12 validation avg_loss=6.2400 (stage=stage3_plus_synthetic)
+[02:37:10] [CRASH] simulated crash at step 12: simulated crash after INTENT for step 12
+[02:37:10] resume: checkpoint step=12, redo_steps=0, orphaned_intents=1
+[02:37:26] [PASS] resume_next_batch_matched -- orphaned_intent_hash=a4a795bbbe5840bcecab9e92efcb57c27db599d0fdcb2be112219d13fb76623c, resumed_batch_hash=a4a795bbbe5840bcecab9e92efcb57c27db599d0fdcb2be112219d13fb76623c
+[02:37:33] step=14 avg_loss=6.2430 n_seq=4
+[02:37:33] step=15 validation avg_loss=6.2198 (stage=stage3_plus_synthetic)
+[02:37:57] checkpoint saved: submission_artifacts/checkpoints/root_step18.json (step=18, hash=7a8953374bb0bf47)
+[02:37:57] step=18 validation avg_loss=6.2006 (stage=stage3_plus_synthetic)
+[02:37:57] [FORK] branch 'root-fork-18' created from checkpoint at step=18
+[02:38:22] step=21 validation avg_loss=6.1811 (stage=stage3_plus_synthetic)
+[02:38:37] step=24 validation avg_loss=6.1617 (stage=stage3_plus_synthetic)
+[02:38:37] [PASS] fork_parent_untouched -- submission_artifacts/checkpoints/root_step18.json unchanged after fork
+[02:38:49] step=24 avg_loss=6.2641 n_seq=4
+[02:38:57] step=27 validation avg_loss=6.1426 (stage=stage3_plus_synthetic)
+[02:39:26] step=29 avg_loss=6.1656 n_seq=4
+[02:39:26] checkpoint saved: submission_artifacts/checkpoints/root-fork-18_step30.json (step=30, hash=32b9e77305a3f2c0)
+[02:39:26] step=30 validation avg_loss=6.1247 (stage=stage3_plus_synthetic)

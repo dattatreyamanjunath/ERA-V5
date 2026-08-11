@@ -1,0 +1,598 @@
+{
+  "content_hash": "2f80b31df394259e0395c279fe8b5fd73664a0c5021a427cf4e2d73c54298911",
+  "created_at": "frozen",
+  "doc_count": 146,
+  "lane": "verified-web",
+  "manifest_hash": "30fa9fdf5921ea2a74da46b6eeb384f54769d0c87e0397f67c8d1d54ebf49c24",
+  "offsets": {
+    "verified:web-000001": [
+      0,
+      47
+    ],
+    "verified:web-000002": [
+      47,
+      151
+    ],
+    "verified:web-000004": [
+      151,
+      251
+    ],
+    "verified:web-000005": [
+      251,
+      328
+    ],
+    "verified:web-000007": [
+      328,
+      402
+    ],
+    "verified:web-000010": [
+      402,
+      505
+    ],
+    "verified:web-000012": [
+      505,
+      569
+    ],
+    "verified:web-000014": [
+      569,
+      661
+    ],
+    "verified:web-000015": [
+      661,
+      764
+    ],
+    "verified:web-000016": [
+      764,
+      864
+    ],
+    "verified:web-000018": [
+      864,
+      964
+    ],
+    "verified:web-000019": [
+      964,
+      1010
+    ],
+    "verified:web-000020": [
+      1010,
+      1055
+    ],
+    "verified:web-000021": [
+      1055,
+      1102
+    ],
+    "verified:web-000022": [
+      1102,
+      1208
+    ],
+    "verified:web-000023": [
+      1208,
+      1276
+    ],
+    "verified:web-000024": [
+      1276,
+      1345
+    ],
+    "verified:web-000026": [
+      1345,
+      1427
+    ],
+    "verified:web-000027": [
+      1427,
+      1476
+    ],
+    "verified:web-000029": [
+      1476,
+      1555
+    ],
+    "verified:web-000030": [
+      1555,
+      1676
+    ],
+    "verified:web-000031": [
+      1676,
+      1803
+    ],
+    "verified:web-000032": [
+      1803,
+      1894
+    ],
+    "verified:web-000033": [
+      1894,
+      1971
+    ],
+    "verified:web-000034": [
+      1971,
+      2102
+    ],
+    "verified:web-000035": [
+      2102,
+      2205
+    ],
+    "verified:web-000036": [
+      2205,
+      2308
+    ],
+    "verified:web-000037": [
+      2308,
+      2424
+    ],
+    "verified:web-000038": [
+      2424,
+      2522
+    ],
+    "verified:web-000039": [
+      2522,
+      2606
+    ],
+    "verified:web-000042": [
+      2606,
+      2679
+    ],
+    "verified:web-000044": [
+      2679,
+      2770
+    ],
+    "verified:web-000046": [
+      2770,
+      2892
+    ],
+    "verified:web-000047": [
+      2892,
+      2971
+    ],
+    "verified:web-000050": [
+      2971,
+      3044
+    ],
+    "verified:web-000052": [
+      3044,
+      3132
+    ],
+    "verified:web-000054": [
+      3132,
+      3174
+    ],
+    "verified:web-000057": [
+      3174,
+      3240
+    ],
+    "verified:web-000058": [
+      3240,
+      3312
+    ],
+    "verified:web-000059": [
+      3312,
+      3392
+    ],
+    "verified:web-000061": [
+      3392,
+      3463
+    ],
+    "verified:web-000062": [
+      3463,
+      3557
+    ],
+    "verified:web-000063": [
+      3557,
+      3681
+    ],
+    "verified:web-000064": [
+      3681,
+      3776
+    ],
+    "verified:web-000066": [
+      3776,
+      3818
+    ],
+    "verified:web-000069": [
+      3818,
+      3872
+    ],
+    "verified:web-000070": [
+      3872,
+      3996
+    ],
+    "verified:web-000072": [
+      3996,
+      4112
+    ],
+    "verified:web-000074": [
+      4112,
+      4214
+    ],
+    "verified:web-000075": [
+      4214,
+      4309
+    ],
+    "verified:web-000076": [
+      4309,
+      4348
+    ],
+    "verified:web-000078": [
+      4348,
+      4453
+    ],
+    "verified:web-000080": [
+      4453,
+      4547
+    ],
+    "verified:web-000081": [
+      4547,
+      4645
+    ],
+    "verified:web-000082": [
+      4645,
+      4739
+    ],
+    "verified:web-000083": [
+      4739,
+      4780
+    ],
+    "verified:web-000084": [
+      4780,
+      4831
+    ],
+    "verified:web-000085": [
+      4831,
+      4919
+    ],
+    "verified:web-000087": [
+      4919,
+      5007
+    ],
+    "verified:web-000088": [
+      5007,
+      5108
+    ],
+    "verified:web-000089": [
+      5108,
+      5224
+    ],
+    "verified:web-000090": [
+      5224,
+      5335
+    ],
+    "verified:web-000093": [
+      5335,
+      5442
+    ],
+    "verified:web-000094": [
+      5442,
+      5520
+    ],
+    "verified:web-000095": [
+      5520,
+      5594
+    ],
+    "verified:web-000097": [
+      5594,
+      5704
+    ],
+    "verified:web-000099": [
+      5704,
+      5805
+    ],
+    "verified:web-000100": [
+      5805,
+      5852
+    ],
+    "verified:web-000102": [
+      5852,
+      5936
+    ],
+    "verified:web-000103": [
+      5936,
+      5985
+    ],
+    "verified:web-000104": [
+      5985,
+      6032
+    ],
+    "verified:web-000105": [
+      6032,
+      6091
+    ],
+    "verified:web-000106": [
+      6091,
+      6203
+    ],
+    "verified:web-000107": [
+      6203,
+      6299
+    ],
+    "verified:web-000108": [
+      6299,
+      6366
+    ],
+    "verified:web-000109": [
+      6366,
+      6455
+    ],
+    "verified:web-000110": [
+      6455,
+      6520
+    ],
+    "verified:web-000111": [
+      6520,
+      6618
+    ],
+    "verified:web-000112": [
+      6618,
+      6723
+    ],
+    "verified:web-000113": [
+      6723,
+      6787
+    ],
+    "verified:web-000114": [
+      6787,
+      6840
+    ],
+    "verified:web-000115": [
+      6840,
+      6909
+    ],
+    "verified:web-000116": [
+      6909,
+      7027
+    ],
+    "verified:web-000118": [
+      7027,
+      7112
+    ],
+    "verified:web-000120": [
+      7112,
+      7172
+    ],
+    "verified:web-000123": [
+      7172,
+      7293
+    ],
+    "verified:web-000124": [
+      7293,
+      7351
+    ],
+    "verified:web-000127": [
+      7351,
+      7435
+    ],
+    "verified:web-000128": [
+      7435,
+      7523
+    ],
+    "verified:web-000129": [
+      7523,
+      7613
+    ],
+    "verified:web-000130": [
+      7613,
+      7713
+    ],
+    "verified:web-000132": [
+      7713,
+      7778
+    ],
+    "verified:web-000133": [
+      7778,
+      7891
+    ],
+    "verified:web-000134": [
+      7891,
+      7998
+    ],
+    "verified:web-000135": [
+      7998,
+      8039
+    ],
+    "verified:web-000137": [
+      8039,
+      8148
+    ],
+    "verified:web-000140": [
+      8148,
+      8271
+    ],
+    "verified:web-000143": [
+      8271,
+      8338
+    ],
+    "verified:web-000144": [
+      8338,
+      8392
+    ],
+    "verified:web-000146": [
+      8392,
+      8437
+    ],
+    "verified:web-000148": [
+      8437,
+      8538
+    ],
+    "verified:web-000150": [
+      8538,
+      8596
+    ],
+    "verified:web-000151": [
+      8596,
+      8644
+    ],
+    "verified:web-000152": [
+      8644,
+      8775
+    ],
+    "verified:web-000157": [
+      8775,
+      8823
+    ],
+    "verified:web-000158": [
+      8823,
+      8921
+    ],
+    "verified:web-000159": [
+      8921,
+      8966
+    ],
+    "verified:web-000161": [
+      8966,
+      9072
+    ],
+    "verified:web-000162": [
+      9072,
+      9189
+    ],
+    "verified:web-000164": [
+      9189,
+      9251
+    ],
+    "verified:web-000165": [
+      9251,
+      9311
+    ],
+    "verified:web-000166": [
+      9311,
+      9420
+    ],
+    "verified:web-000167": [
+      9420,
+      9525
+    ],
+    "verified:web-000168": [
+      9525,
+      9616
+    ],
+    "verified:web-000169": [
+      9616,
+      9663
+    ],
+    "verified:web-000170": [
+      9663,
+      9765
+    ],
+    "verified:web-000171": [
+      9765,
+      9817
+    ],
+    "verified:web-000172": [
+      9817,
+      9919
+    ],
+    "verified:web-000174": [
+      9919,
+      9969
+    ],
+    "verified:web-000176": [
+      9969,
+      10029
+    ],
+    "verified:web-000177": [
+      10029,
+      10157
+    ],
+    "verified:web-000179": [
+      10157,
+      10239
+    ],
+    "verified:web-000180": [
+      10239,
+      10290
+    ],
+    "verified:web-000181": [
+      10290,
+      10369
+    ],
+    "verified:web-000184": [
+      10369,
+      10430
+    ],
+    "verified:web-000188": [
+      10430,
+      10477
+    ],
+    "verified:web-000194": [
+      10477,
+      10533
+    ],
+    "verified:web-000195": [
+      10533,
+      10590
+    ],
+    "verified:web-000196": [
+      10590,
+      10673
+    ],
+    "verified:web-000198": [
+      10673,
+      10760
+    ],
+    "verified:web-000200": [
+      10760,
+      10839
+    ],
+    "verified:web-000201": [
+      10839,
+      10916
+    ],
+    "verified:web-000202": [
+      10916,
+      10958
+    ],
+    "verified:web-000204": [
+      10958,
+      11054
+    ],
+    "verified:web-000206": [
+      11054,
+      11113
+    ],
+    "verified:web-000207": [
+      11113,
+      11157
+    ],
+    "verified:web-000208": [
+      11157,
+      11258
+    ],
+    "verified:web-000210": [
+      11258,
+      11369
+    ],
+    "verified:web-000211": [
+      11369,
+      11460
+    ],
+    "verified:web-000212": [
+      11460,
+      11531
+    ],
+    "verified:web-000213": [
+      11531,
+      11580
+    ],
+    "verified:web-000214": [
+      11580,
+      11674
+    ],
+    "verified:web-000216": [
+      11674,
+      11755
+    ],
+    "verified:web-000217": [
+      11755,
+      11873
+    ],
+    "verified:web-000218": [
+      11873,
+      11935
+    ],
+    "verified:web-000220": [
+      11935,
+      12052
+    ]
+  },
+  "parent_manifest_hash": "GENESIS",
+  "role": "TRAIN",
+  "shard_id": "shard-TRAIN-verified-web",
+  "token_count": 12052,
+  "tokenizer_hash": "d718985853c9d24ce52392b5a4c9cdee803c3450459af64a9043fb15b31da13d"
+}

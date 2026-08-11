@@ -1,0 +1,374 @@
+{
+  "content_hash": "8f44e4629ffdfd6712a21c85c24e9ee2c63b5022a69512051e97e6731d2f52f7",
+  "created_at": "frozen",
+  "doc_count": 90,
+  "lane": "validation",
+  "manifest_hash": "3d3ce32c402218863ccef09554bb1b8e958a1a1abf212be070de9273c39351cd",
+  "offsets": {
+    "synthetic:x-000771": [
+      0,
+      51
+    ],
+    "synthetic:x-000776": [
+      51,
+      178
+    ],
+    "synthetic:x-000782": [
+      178,
+      272
+    ],
+    "synthetic:x-000804": [
+      272,
+      348
+    ],
+    "synthetic:x-000826": [
+      348,
+      441
+    ],
+    "synthetic:x-000839": [
+      441,
+      545
+    ],
+    "synthetic:x-000846": [
+      545,
+      636
+    ],
+    "synthetic:x-000847": [
+      636,
+      689
+    ],
+    "synthetic:x-000855": [
+      689,
+      791
+    ],
+    "synthetic:x-000877": [
+      791,
+      874
+    ],
+    "synthetic:x-000896": [
+      874,
+      966
+    ],
+    "synthetic:x-000898": [
+      966,
+      1097
+    ],
+    "unverified:x-000537": [
+      1097,
+      1178
+    ],
+    "unverified:x-000548": [
+      1178,
+      1275
+    ],
+    "unverified:x-000567": [
+      1275,
+      1317
+    ],
+    "unverified:x-000574": [
+      1317,
+      1431
+    ],
+    "unverified:x-000580": [
+      1431,
+      1531
+    ],
+    "unverified:x-000589": [
+      1531,
+      1671
+    ],
+    "unverified:x-000595": [
+      1671,
+      1747
+    ],
+    "unverified:x-000606": [
+      1747,
+      1787
+    ],
+    "unverified:x-000625": [
+      1787,
+      1907
+    ],
+    "unverified:x-000629": [
+      1907,
+      1969
+    ],
+    "unverified:x-000635": [
+      1969,
+      2106
+    ],
+    "unverified:x-000644": [
+      2106,
+      2226
+    ],
+    "unverified:x-000645": [
+      2226,
+      2268
+    ],
+    "unverified:x-000646": [
+      2268,
+      2389
+    ],
+    "unverified:x-000650": [
+      2389,
+      2442
+    ],
+    "unverified:x-000658": [
+      2442,
+      2534
+    ],
+    "unverified:x-000660": [
+      2534,
+      2651
+    ],
+    "unverified:x-000664": [
+      2651,
+      2804
+    ],
+    "unverified:x-000677": [
+      2804,
+      2868
+    ],
+    "unverified:x-000698": [
+      2868,
+      2977
+    ],
+    "unverified:x-000703": [
+      2977,
+      3110
+    ],
+    "unverified:x-000732": [
+      3110,
+      3228
+    ],
+    "unverified:x-000735": [
+      3228,
+      3302
+    ],
+    "verified:pdf-000402": [
+      3302,
+      3633
+    ],
+    "verified:pdf-000420": [
+      3633,
+      4071
+    ],
+    "verified:pdf-000426": [
+      4071,
+      4380
+    ],
+    "verified:pdf-000443": [
+      4380,
+      4822
+    ],
+    "verified:pdf-000451": [
+      4822,
+      5227
+    ],
+    "verified:pdf-000466": [
+      5227,
+      5710
+    ],
+    "verified:pdf-000468": [
+      5710,
+      6059
+    ],
+    "verified:pdf-000473": [
+      6059,
+      6410
+    ],
+    "verified:pdf-000517": [
+      6410,
+      6827
+    ],
+    "verified:pdf-000518": [
+      6827,
+      7268
+    ],
+    "verified:speech-000222": [
+      7268,
+      7317
+    ],
+    "verified:speech-000227": [
+      7317,
+      7333
+    ],
+    "verified:speech-000243": [
+      7333,
+      7351
+    ],
+    "verified:speech-000246": [
+      7351,
+      7374
+    ],
+    "verified:speech-000274": [
+      7374,
+      7404
+    ],
+    "verified:speech-000283": [
+      7404,
+      7422
+    ],
+    "verified:speech-000287": [
+      7422,
+      7451
+    ],
+    "verified:speech-000288": [
+      7451,
+      7505
+    ],
+    "verified:speech-000289": [
+      7505,
+      7548
+    ],
+    "verified:speech-000292": [
+      7548,
+      7563
+    ],
+    "verified:speech-000293": [
+      7563,
+      7597
+    ],
+    "verified:speech-000294": [
+      7597,
+      7644
+    ],
+    "verified:speech-000296": [
+      7644,
+      7664
+    ],
+    "verified:speech-000319": [
+      7664,
+      7695
+    ],
+    "verified:speech-000330": [
+      7695,
+      7718
+    ],
+    "verified:speech-000335": [
+      7718,
+      7759
+    ],
+    "verified:speech-000338": [
+      7759,
+      7792
+    ],
+    "verified:speech-000339": [
+      7792,
+      7823
+    ],
+    "verified:speech-000376": [
+      7823,
+      7873
+    ],
+    "verified:web-000008": [
+      7873,
+      7943
+    ],
+    "verified:web-000009": [
+      7943,
+      7985
+    ],
+    "verified:web-000025": [
+      7985,
+      8038
+    ],
+    "verified:web-000040": [
+      8038,
+      8148
+    ],
+    "verified:web-000049": [
+      8148,
+      8226
+    ],
+    "verified:web-000051": [
+      8226,
+      8283
+    ],
+    "verified:web-000053": [
+      8283,
+      8357
+    ],
+    "verified:web-000065": [
+      8357,
+      8399
+    ],
+    "verified:web-000067": [
+      8399,
+      8460
+    ],
+    "verified:web-000071": [
+      8460,
+      8548
+    ],
+    "verified:web-000091": [
+      8548,
+      8627
+    ],
+    "verified:web-000098": [
+      8627,
+      8672
+    ],
+    "verified:web-000119": [
+      8672,
+      8720
+    ],
+    "verified:web-000122": [
+      8720,
+      8849
+    ],
+    "verified:web-000126": [
+      8849,
+      8921
+    ],
+    "verified:web-000131": [
+      8921,
+      9035
+    ],
+    "verified:web-000138": [
+      9035,
+      9095
+    ],
+    "verified:web-000139": [
+      9095,
+      9206
+    ],
+    "verified:web-000141": [
+      9206,
+      9289
+    ],
+    "verified:web-000145": [
+      9289,
+      9347
+    ],
+    "verified:web-000173": [
+      9347,
+      9449
+    ],
+    "verified:web-000185": [
+      9449,
+      9503
+    ],
+    "verified:web-000199": [
+      9503,
+      9549
+    ],
+    "verified:web-000205": [
+      9549,
+      9599
+    ],
+    "verified:web-000215": [
+      9599,
+      9695
+    ],
+    "verified:web-000219": [
+      9695,
+      9763
+    ]
+  },
+  "parent_manifest_hash": "8a3c0126cc6a6f6c01f5158de2527e2b7421cf8a4c2219a2ce63df7e9c9f9a03",
+  "role": "VALIDATION",
+  "shard_id": "shard-VALIDATION",
+  "token_count": 9763,
+  "tokenizer_hash": "d718985853c9d24ce52392b5a4c9cdee803c3450459af64a9043fb15b31da13d"
+}

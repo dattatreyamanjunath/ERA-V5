@@ -1,0 +1,115 @@
+{
+  "findings": [
+    {
+      "name": "tokenizer_hash_verified",
+      "passed": true,
+      "detail": "freeze_hash=d718985853c9d24c",
+      "evidence_path": "manifests/"
+    },
+    {
+      "name": "manifests_validated",
+      "passed": true,
+      "detail": "root_hash=6a30c360672d2549e567f7a921ab04a716839b52d20ad8d8035eaed4d67bc373",
+      "evidence_path": "manifests/"
+    },
+    {
+      "name": "eval_shard_blocked",
+      "passed": true,
+      "detail": "shard 'shard-EVAL-sealed' has role EVAL, not TRAIN; blocked",
+      "evidence_path": "manifests/"
+    },
+    {
+      "name": "crash_recovery",
+      "passed": true,
+      "detail": "crash_happened=True; resume_next_batch_matched=True; hash a4a795bb..",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "fork_parent_untouched",
+      "passed": true,
+      "detail": "root_step18.json byte-identical after fork branch trained",
+      "evidence_path": "checkpoints/"
+    },
+    {
+      "name": "replay_hash_matched",
+      "passed": true,
+      "detail": "7 steps matched, 0 mismatches (steps 6..12)",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "ledger_chains",
+      "passed": true,
+      "detail": "all 4 ledger hash chains verified",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "no_leakage_root",
+      "passed": true,
+      "detail": "no non-TRAIN document contributed a loss-bearing token (root branch)",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "no_leakage_fork",
+      "passed": true,
+      "detail": "no non-TRAIN document contributed a loss-bearing token (fork branch)",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "manifest_chain",
+      "passed": true,
+      "detail": "manifest chain verified",
+      "evidence_path": "manifests/"
+    },
+    {
+      "name": "tamper_detected",
+      "passed": true,
+      "detail": "corruption_detected=True, restoration_verified=True",
+      "evidence_path": "manifests/"
+    },
+    {
+      "name": "mixture_compliance",
+      "passed": true,
+      "detail": "stage_advances=0, rollbacks=0",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "opus_audit_trail",
+      "passed": true,
+      "detail": "OPUS decisions logged per-step in consumption ledger",
+      "evidence_path": "ledgers/"
+    },
+    {
+      "name": "throughput",
+      "passed": true,
+      "detail": "47.8 effective tok/s",
+      "evidence_path": "performance.json"
+    }
+  ],
+  "all_passed": true,
+  "corpus": {
+    "path": "data/sangraha_kan_sample.jsonl",
+    "docs_survived": 900,
+    "quarantined": 1,
+    "exact_dups": 1
+  },
+  "recovery": {
+    "replay_passed": true,
+    "replay_matched_steps": 7,
+    "replay_mismatches": 0,
+    "crash_step": 12,
+    "resume_matched": true
+  },
+  "mixture": {
+    "stage_events": 0,
+    "rollback_events": 0
+  },
+  "performance": {
+    "wall_seconds": 280.0,
+    "n_steps": 30,
+    "consumed_tokens": 15360,
+    "effective_tokens": 13391,
+    "consumed_tokens_per_sec": 54.857142857142854,
+    "effective_tokens_per_sec": 47.825,
+    "effective_over_consumed_ratio": 0.8718098958333333
+  }
+}

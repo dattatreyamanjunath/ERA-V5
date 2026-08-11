@@ -1,0 +1,15 @@
+{
+  "throughput": {
+    "wall_seconds": 280.0,
+    "n_steps": 30,
+    "consumed_tokens": 15360,
+    "effective_tokens": 13391,
+    "consumed_tokens_per_sec": 54.857142857142854,
+    "effective_tokens_per_sec": 47.825,
+    "effective_over_consumed_ratio": 0.8718098958333333
+  },
+  "n_steps_root": 18,
+  "n_steps_total_including_fork": 30,
+  "total_consumed_tokens": 15360,
+  "total_loss_tokens": 13391
+}
