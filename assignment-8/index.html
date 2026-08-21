@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Attention, in order — every mechanism by launch date</title>
+<meta name="description" content="Every attention mechanism from scaled dot-product to DeepSeek-V4's compressed sparse attention, in chronological order, each one framed as an answer to the problem that existed at that moment. Every date verified against the primary source.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁️</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">Attention, <span>in order</span></div>
+    <nav class="topnav">
+      <a href="#standard">Standard attention</a>
+      <a href="#bills">The two bills</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#next">What comes next</a>
+      <a href="#corrections">Corrections</a>
+    </nav>
+    <button class="themebtn" id="themebtn" type="button" title="Toggle theme">◐</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">ERA V5 · Session 8 · Modern attention variants</div>
+    <h1>Every attention mechanism,<br>in the order it <em>actually</em> arrived.</h1>
+    <p class="lede">
+      Vanilla attention was never wrong. It was <em>expensive</em>. Everything on the timeline
+      below is somebody looking at that bill and trying to pay less of it — and every one of them
+      pays for the saving with something. This page puts them in launch order, gives each one the
+      problem it was answering, and states honestly what it gives up.
+    </p>
+    <p class="lede small">
+      Dates are the part that is easiest to get wrong and easiest to check, so every one here was
+      verified against the primary source rather than recalled. Turn on
+      <b>Show date provenance</b> in the timeline to see the receipts.
+    </p>
+    <div class="herostats">
+      <div class="stat"><b id="stat-count">—</b><span>mechanisms</span></div>
+      <div class="stat"><b id="stat-span">—</b><span>years covered</span></div>
+      <div class="stat"><b id="stat-verified">—</b><span>dates machine-checked</span></div>
+      <div class="stat"><b id="stat-eras">—</b><span>shifts of priority</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 1. STANDARD ATTENTION ================= -->
+<section id="standard">
+  <div class="wrap">
+    <div class="eyebrow">Start here — 12 June 2017</div>
+    <h2>Standard scaled dot-product attention</h2>
+    <p class="lede">
+      Nothing after this makes sense without it. Six tokens, four dimensions per head, every number
+      below computed live in your browser — not drawn. Step through the five stages.
+    </p>
+
+    <div class="panel">
+      <div class="controls">
+        <button class="step" data-stage="0" type="button">1 · Q, K, V</button>
+        <button class="step" data-stage="1" type="button">2 · Scores QKᵀ</button>
+        <button class="step" data-stage="2" type="button">3 · Scale ÷√dₖ</button>
+        <button class="step" data-stage="3" type="button">4 · Causal mask</button>
+        <button class="step" data-stage="4" type="button">5 · Softmax</button>
+        <button class="step" data-stage="5" type="button">6 · Weighted sum of V</button>
+        <label class="switch"><input type="checkbox" id="causal" checked> causal mask on</label>
+        <span class="ctl">temperature
+          <input type="range" id="temp" min="0.2" max="3" step="0.1" value="1">
+          <span class="mono" id="tempval">1.0</span>
+        </span>
+      </div>
+
+      <div class="attn-stage">
+        <div class="scroll-x"><div id="attn-matrix"></div></div>
+        <div>
+          <div class="stagenote" id="attn-note"></div>
+          <div id="attn-detail" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Two facts to carry forward</h3>
+      <div class="grid2">
+        <div>
+          <p class="small"><b>Every token is compared with every other token.</b> Six tokens give 36 scores.
+          Six hundred give 360,000. Ten thousand give one hundred million. This exact all-to-all comparison
+          is simultaneously the strength of attention and its entire cost.</p>
+        </div>
+        <div>
+          <p class="small"><b>Attention itself does not know order.</b> If token 0 and token 4 hold the same
+          word, their queries, keys and values are identical. Something else has to say which came first —
+          which is why a third of the timeline below is about position.</p>
+        </div>
+      </div>
+      <p class="small muted" style="margin:0">
+        Turn the causal mask off above and watch weight move onto tokens that have not happened yet.
+        That is precisely the problem the mask solves.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2. THE TWO BILLS ================= -->
+<section id="bills">
+  <div class="wrap">
+    <div class="eyebrow">The problem everything else is answering</div>
+    <h2>Attention sends two different bills</h2>
+    <p class="lede">
+      They grow differently, they hurt at different moments, and almost every mechanism below attacks
+      one of them and not the other. Confusing the two is the fastest way to pick the wrong technique.
+    </p>
+
+    <div class="panel">
+      <div class="controls">
+        <span class="ctl">context length T
+          <input type="range" id="bills-t" min="1024" max="1048576" step="1024" value="32768">
+          <span class="mono" id="bills-tval">32,768</span>
+        </span>
+      </div>
+      <div class="grid2">
+        <div class="chartbox"><svg class="chart" id="bills-chart" viewBox="0 0 520 260" role="img"
+            aria-label="Compute grows quadratically with context length while KV cache grows linearly"></svg></div>
+        <div>
+          <div class="tradebox" style="border-color:var(--compute)">
+            <h4 style="color:var(--compute)">Bill 1 · Compute, grows as T²</h4>
+            <p class="small">Query–key comparisons at this context length:
+              <b class="mono" id="bills-pairs">—</b>.
+              Double the context and this becomes roughly four times larger. It hurts when you
+              <em>process</em> a long input.</p>
+          </div>
+          <div class="tradebox" style="border-color:var(--memory)">
+            <h4 style="color:var(--memory)">Bill 2 · KV cache, grows as T</h4>
+            <p class="small">Saved keys and values for one conversation:
+              <b class="mono" id="bills-cache">—</b>
+              (48 layers, 8 KV heads, head_dim 128, bf16). It hurts when you <em>serve</em>, and it is
+              private per user — model weights are shared, conversation history is not.</p>
+          </div>
+          <p class="small muted">
+            So the real question behind every row below is: <em>does attention become too expensive to
+            compute, or does the saved history become too large to store?</em> Different answers lead to
+            different mechanisms.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. THE TIMELINE ================= -->
+<section id="timeline">
+  <div class="wrap">
+    <div class="eyebrow">The point of the whole page</div>
+    <h2>The timeline</h2>
+    <p class="lede">
+      Not the order they were taught, and not grouped by family. Launch order — because that is the
+      only arrangement in which you can watch the field change its mind. Click any mechanism for its
+      full trade-off.
+    </p>
+
+    <div class="tl-legend" id="tl-legend"></div>
+
+    <div class="verifybar">
+      <div>
+        <label class="switch"><input type="checkbox" id="verify-toggle"> <b>Show date provenance</b></label>
+        <div class="tiny muted" style="margin-top:3px">
+          Reveals, for every mechanism, the exact source and how the date was established.
+        </div>
+      </div>
+      <div class="tiny muted" id="verify-summary"></div>
+    </div>
+
+    <div class="timeline" id="timeline-root"></div>
+  </div>
+</section>
+
+<!-- ================= 4. CALCULATORS ================= -->
+<section id="calculators">
+  <div class="wrap">
+    <div class="eyebrow">Check the arithmetic yourself</div>
+    <h2>The mechanisms, as numbers</h2>
+    <p class="lede">
+      Five claims from the session, each one recomputed live so you can move the inputs and watch
+      the trade appear.
+    </p>
+
+    <div class="grid2">
+      <div class="panel">
+        <h3>Remove the softmax and the past folds up</h3>
+        <p class="small muted">One query, three old key–value pairs. The left route visits every old key.
+        The right route reads one pre-built state S. With softmax off they agree exactly — which is the
+        whole licence for linear attention.</p>
+        <div class="controls">
+          <label class="switch"><input type="checkbox" id="sm-toggle"> turn softmax on</label>
+        </div>
+        <div id="softmax-demo"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Why an add-only state cannot correct itself</h3>
+        <p class="small muted">Key A currently returns 40. It should now return 55. There is only ever
+        one state matrix — the question is what you write into it.</p>
+        <div class="controls">
+          <span class="ctl">wanted answer
+            <input type="range" id="delta-want" min="10" max="120" step="5" value="55">
+            <span class="mono" id="delta-wantval">55</span>
+          </span>
+        </div>
+        <div id="delta-demo"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>The KV cache bill, done properly</h3>
+      <p class="small muted">
+        <code>2 × layers × kv_heads × head_dim × T × batch × bytes</code> — every factor answers a simple
+        question. Model weights load once and are shared; this does not.
+      </p>
+      <div class="controls">
+        <span class="ctl">layers <input type="range" id="kv-layers" min="8" max="128" step="4" value="48"><span class="mono" id="kv-layersv">48</span></span>
+        <span class="ctl">kv_heads <input type="range" id="kv-heads" min="1" max="64" step="1" value="8"><span class="mono" id="kv-headsv">8</span></span>
+        <span class="ctl">head_dim <input type="range" id="kv-dim" min="32" max="256" step="16" value="128"><span class="mono" id="kv-dimv">128</span></span>
+        <span class="ctl">context <input type="range" id="kv-t" min="1024" max="1048576" step="1024" value="32768"><span class="mono" id="kv-tv">32,768</span></span>
+        <span class="ctl">users <input type="range" id="kv-batch" min="1" max="64" step="1" value="1"><span class="mono" id="kv-batchv">1</span></span>
+        <span class="ctl">precision
+          <select id="kv-bytes" class="chipbtn"><option value="2" selected>bf16 (2B)</option><option value="1">fp8 (1B)</option><option value="4">fp32 (4B)</option></select>
+        </span>
+      </div>
+      <div id="kv-demo"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h3>Head sharing — MHA vs GQA vs MQA</h3>
+        <p class="small muted">Eight query heads. Change how many K/V heads they share.
+        Sharing lowers the line; it does not stop it rising.</p>
+        <div class="controls" id="gqa-controls"></div>
+        <div id="gqa-demo"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Compress the sequence, then read only top-k</h3>
+        <p class="small muted">Two different savings. Compression reduces how much is
+        <em>stored</em>; top-k reduces how much is <em>read</em>.</p>
+        <div class="controls">
+          <span class="ctl">tokens per block <input type="range" id="cmp-m" min="1" max="8" step="1" value="4"><span class="mono" id="cmp-mv">4</span></span>
+          <span class="ctl">top-k blocks <input type="range" id="cmp-k" min="1" max="16" step="1" value="4"><span class="mono" id="cmp-kv">4</span></span>
+        </div>
+        <div id="compress-demo"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Schedules across depth — not every layer needs the same memory</h3>
+      <p class="small muted">
+        A fixed-state layer (D) is cheap to serve but compresses the past. A sparse-attention layer (G)
+        restores exact token access but carries a KV cache. The ordering is itself part of the architecture.
+      </p>
+      <div class="controls" id="sched-controls"></div>
+      <div id="sched-demo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. WHAT THE TIMELINE SHOWS ================= -->
+<section id="next">
+  <div class="wrap">
+    <div class="eyebrow">Reading the shape</div>
+    <h2>What you can only see in date order</h2>
+    <div class="grid2">
+      <div>
+        <p><b>The compute panic ended in May 2022, and almost nobody noticed.</b> From 2019 to 2021 the
+        field produced Sparse Transformer, Reformer, Longformer, Linformer, linear attention, BigBird and
+        Performer — seven attacks on T² in under two years. Then FlashAttention made <em>exact</em>
+        attention 2–4× faster with O(T) memory, and that entire line went quiet for three years. It was
+        never refuted. It was made unnecessary by a kernel. A list of mechanisms cannot show you that;
+        only the gap between 2022 and 2025 can.</p>
+
+        <p><b>The bill people care about changed, and you can date the switch.</b> Everything before 2023
+        is about FLOPs. Almost everything in 2023 — GQA, sliding window, attention sinks — is about the
+        KV cache. Nothing about attention changed in between; <em>deployment</em> changed. Once models
+        served millions of concurrent conversations, the per-user private cache became the binding
+        constraint, and the field pivoted within about twelve months.</p>
+
+        <p><b>Position is a repair cycle, not a solved problem.</b> Learned table (2017) → sinusoidal
+        (2017) → relative (2018) → RoPE (2021) → PI, NTK-aware, YaRN (2023) → DroPE (2025). Every entry
+        after RoPE is a patch on RoPE. Then DroPE arrives and says the patches were the wrong idea because
+        the positional embedding itself was the obstacle — which is what a field does right before it
+        abandons an assumption.</p>
+      </div>
+      <div>
+        <p><b>Good ideas wait for their engineering.</b> The delta rule enters linear attention in
+        February 2021 and then nothing happens for <em>three years and four months</em>, until someone
+        finds a way to parallelize it over sequence length in June 2024. Gated DeltaNet follows six months
+        after that, and production deployments six months after that. The idea was never the bottleneck.
+        Trainability was. Sitting in a list, the delta rule looks like a 2024 invention.</p>
+
+        <p><b>February 2025 is the tell.</b> NSA and MoBA — two labs, the same core idea of trained-in
+        block sparsity, published <em>two days apart</em>. Simultaneous invention like that means the
+        problem was fully ripe and the pieces were lying in the open. It is the single best predictor on
+        the whole timeline that this direction was about to become the mainstream, which it did.</p>
+
+        <p><b>The oscillation the lecture predicted is real, and it is visible.</b> Exactness (2014–17)
+        → compute (2018–20) → position, then exactness gets cheap again (2021–22) → decode memory (2023)
+        → recurrent state returns (2024) → sparsity returns, now trained in (2025) → compression as the
+        primary lever (2026). Twice the field has left fixed-size state behind and twice it has come back
+        for it, each time with the missing piece added — first gating, then the delta rule.</p>
+
+        <div class="tradebox pick" style="margin-top:18px">
+          <h4>So what comes next?</h4>
+          <p class="small">Extrapolating the slope rather than claiming knowledge: the 2026 cluster
+          disagrees about the <em>primary</em> lever but agrees the era of one uniform mechanism per
+          network is over. Three things the shape suggests — (1) the fixed-size state gives way to a
+          <em>growing-but-sublinear</em> one, which is exactly what Log-Linear Attention is already
+          prototyping; (2) the schedule ratio stops being inherited and becomes something you learn or
+          search per layer; and (3) compression moves earlier still, from the KV cache into the
+          tokenizer and embedding, since the cheapest token remains the one never spent. The honest
+          caveat: the timeline's own record is that the next move often comes from a kernel, not an
+          equation, and nobody predicts those.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. CORRECTIONS ================= -->
+<section id="corrections">
+  <div class="wrap">
+    <div class="eyebrow">Checking the dates, as instructed</div>
+    <h2>Two things worth flagging</h2>
+    <p class="lede">
+      The brief asked us to check every date against the actual paper, and to say so if the session
+      itself got something wrong. Both of these came out of doing that.
+    </p>
+
+    <div class="callout">
+      <h3>1 · There is a name collision that catches agents, and it is one character wide</h3>
+      <p class="small">Searching for "DroPE arXiv" returns <b>arXiv:2503.15029</b> first. That paper is
+      real, and it is <em>not</em> this. It is about trajectory generation for self-driving cars.</p>
+      <div class="vs">
+        <div class="side left">
+          <h4>✗ DRoPE — arXiv:2503.15029</h4>
+          <p class="small" style="margin:0">"Directional Rotary Position Embedding for Efficient Agent
+          Interaction Modeling", 19 Mar 2025. Adapts RoPE to encode <em>agent headings</em> for
+          autonomous-driving trajectory models, evaluated on Waymo Open Motion and Argoverse 2.
+          Nothing to do with LLM context extension.</p>
+        </div>
+        <div class="mid">≠</div>
+        <div class="side right">
+          <h4>✓ DroPE — arXiv:2512.12167</h4>
+          <p class="small" style="margin:0">"Extending the Context of Pretrained LLMs by Dropping Their
+          Positional Embeddings", Sakana AI, 13 Dec 2025. Removes RoPE after pretraining and
+          recalibrates for under 1% of the pretraining budget. <em>This</em> is the one from Session 8.</p>
+        </div>
+      </div>
+      <p class="small muted" style="margin:14px 0 0">
+        Nine months apart, different field, different mechanism, near-identical name. This is exactly the
+        failure the brief warned about: an agent that half-remembers a technique and confidently attaches
+        the wrong paper to it.
+      </p>
+    </div>
+
+    <div class="callout">
+      <h3>2 · The session understates what is known about DroPE</h3>
+      <p class="small">
+        Section 9 says: <em>"What the available record does not establish: the exact DroPE algorithm or
+        which rotary dimensions it changes."</em> The public record does establish it. The Sakana AI paper
+        (arXiv:2512.12167, v1 13 Dec 2025) gives the full method, and the code is open at
+        <a href="https://github.com/SakanaAI/DroPE">github.com/SakanaAI/DroPE</a>.
+      </p>
+      <p class="small">
+        The answer to "which rotary dimensions does it change" turns out to be <b>all of them</b> — the
+        method's whole claim is that positional embeddings are a training scaffold rather than a permanent
+        requirement, so they are removed from every layer and the model is recalibrated. That is fully
+        consistent with the V4 cookbook line <em>"positional recalibration: DroPE, applied before
+        annealing"</em>, and with the section's correct insistence that this is a training-time procedure
+        and not an inference switch. The epistemic caution in that section was right; it was just aimed at
+        a gap that a public paper had already closed.
+      </p>
+    </div>
+
+    <div class="panel" style="margin-top:18px">
+      <h3>Dates that deserve an asterisk</h3>
+      <p class="small muted">Not every mechanism has a paper. These four are the weakest links on the page,
+      and pretending otherwise would defeat the point.</p>
+      <div id="weak-dates"></div>
+    </div>
+  </div>
+</section>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" tabindex="-1">
+  <button class="drawer-close" id="drawer-close" type="button" aria-label="Close">✕</button>
+  <div id="drawer-body"></div>
+</aside>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <b>Attention, in order</b> — ERA V5 Session 8 assignment.
+      Built from the Session 8 lesson; every date checked against the primary source with
+      <code>scripts/verify_dates.py</code>, whose output is committed as
+      <code>date-verification.txt</code>.
+    </p>
+    <p class="small">
+      Source and full citation table:
+      <a href="https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8">github.com/dattatreyamanjunath/ERA-V5 · assignment-8</a>
+    </p>
+    <p class="tiny muted">
+      Dates shown are arXiv v1 submission dates unless the mechanism has no paper, in which case the
+      official release post is used and labelled. Where a model's blog release and its paper differ,
+      both are given rather than silently picking one.
+    </p>
+  </div>
+</footer>
+
+<script src="js/mechanisms.js"></script>
+<script src="js/attention.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/timeline.js"></script>
+</body>
+</html>

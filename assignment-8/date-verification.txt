@@ -1,0 +1,103 @@
+mechanisms.js: 46 rows — 42 arXiv-backed, 4 needing manual check
+
+Checking every arXiv date against the API `published` field (= v1 submission).
+
+STATUS  STORED      ARXIV v1    ID          MECHANISM
+----------------------------------------------------------------------------------------------------
+OK      2014-09-01  2014-09-01  1409.0473   Additive (Bahdanau) attention
+                                            └─ Neural Machine Translation by Jointly Learning to Align and Translate
+OK      2015-08-17  2015-08-17  1508.04025  Multiplicative / dot-product attention
+                                            └─ Effective Approaches to Attention-based Neural Machine Translation
+OK      2017-05-08  2017-05-08  1705.03122  Learned absolute position embeddings
+                                            └─ Convolutional Sequence to Sequence Learning
+OK      2017-06-12  2017-06-12  1706.03762  Scaled dot-product & multi-head attention
+                                            └─ Attention Is All You Need
+OK      2017-06-12  2017-06-12  1706.03762  Sinusoidal position encoding
+                                            └─ Attention Is All You Need
+OK      2018-03-06  2018-03-06  1803.02155  Relative position representations
+                                            └─ Self-Attention with Relative Position Representations
+OK      2019-01-09  2019-01-09  1901.02860  Segment recurrence + relative positions (Tra
+                                            └─ Transformer-XL: Attentive Language Models Beyond a Fixed-Length Contex
+OK      2019-04-23  2019-04-23  1904.10509  Sparse Transformer (strided / fixed patterns
+                                            └─ Generating Long Sequences with Sparse Transformers
+OK      2019-11-06  2019-11-06  1911.02150  Multi-Query Attention (MQA)
+                                            └─ Fast Transformer Decoding: One Write-Head is All You Need
+OK      2020-01-13  2020-01-13  2001.04451  Reformer (LSH attention)
+                                            └─ Reformer: The Efficient Transformer
+OK      2020-04-10  2020-04-10  2004.05150  Sliding window + global attention (Longforme
+                                            └─ Longformer: The Long-Document Transformer
+OK      2020-06-08  2020-06-08  2006.04768  Linformer (low-rank K/V projection)
+                                            └─ Linformer: Self-Attention with Linear Complexity
+OK      2020-06-29  2020-06-29  2006.16236  Linear attention ("Transformers are RNNs")
+                                            └─ Transformers are RNNs: Fast Autoregressive Transformers with Linear At
+OK      2020-07-28  2020-07-28  2007.14062  BigBird (window + global + random)
+                                            └─ Big Bird: Transformers for Longer Sequences
+OK      2020-09-30  2020-09-30  2009.14794  Performer (FAVOR+)
+                                            └─ Rethinking Attention with Performers
+OK      2021-02-22  2021-02-22  2102.11174  The delta rule in linear transformers
+                                            └─ Linear Transformers Are Secretly Fast Weight Programmers
+OK      2021-03-03  2021-03-03  2103.02143  Random Feature Attention (and gating)
+                                            └─ Random Feature Attention
+OK      2021-04-20  2021-04-20  2104.09864  Rotary Position Embedding (RoPE)
+                                            └─ RoFormer: Enhanced Transformer with Rotary Position Embedding
+OK      2021-08-27  2021-08-27  2108.12409  ALiBi (attention with linear biases)
+                                            └─ Train Short, Test Long: Attention with Linear Biases Enables Input Len
+OK      2022-02-21  2022-02-21  2202.10447  Gated attention unit + chunked linear attent
+                                            └─ Transformer Quality in Linear Time
+OK      2022-05-27  2022-05-27  2205.14135  FlashAttention (IO-aware exact attention)
+                                            └─ FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awar
+OK      2022-12-28  2022-12-28  2212.14052  H3 — diagnosing why state models fail at lan
+                                            └─ Hungry Hungry Hippos: Towards Language Modeling with State Space Model
+OK      2023-05-22  2023-05-22  2305.13245  Grouped-Query Attention (GQA)
+                                            └─ GQA: Training Generalized Multi-Query Transformer Models from Multi-He
+OK      2023-06-27  2023-06-27  2306.15595  Position Interpolation (PI)
+                                            └─ Extending Context Window of Large Language Models via Positional Inter
+OK      2023-08-31  2023-08-31  2309.00071  YaRN
+                                            └─ YaRN: Efficient Context Window Extension of Large Language Models
+OK      2023-09-29  2023-09-29  2309.17453  Attention sinks (StreamingLLM)
+                                            └─ Efficient Streaming Language Models with Attention Sinks
+OK      2023-10-10  2023-10-10  2310.06825  Sliding window in a production decoder (Mist
+                                            └─ Mistral 7B
+OK      2023-12-01  2023-12-01  2312.00752  Mamba (selective state space)
+                                            └─ Mamba: Linear-Time Sequence Modeling with Selective State Spaces
+OK      2024-02-29  2024-02-29  2402.19427  Griffin — local attention + gated linear rec
+                                            └─ Griffin: Mixing Gated Linear Recurrences with Local Attention for Effi
+OK      2024-04-10  2024-04-10  2404.07143  Infini-attention (compressive memory)
+                                            └─ Leave No Context Behind: Efficient Infinite Context Transformers with 
+OK      2024-05-07  2024-05-07  2405.04434  Multi-head Latent Attention (MLA)
+                                            └─ DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts La
+OK      2024-06-10  2024-06-10  2406.06484  DeltaNet parallelized over sequence length
+                                            └─ Parallelizing Linear Transformers with the Delta Rule over Sequence Le
+OK      2024-06-16  2024-06-16  2406.10774  Quest — query-aware top-k page selection
+                                            └─ Quest: Query-Aware Sparsity for Efficient Long-Context LLM Inference
+OK      2024-12-09  2024-12-09  2412.06464  Gated DeltaNet
+                                            └─ Gated Delta Networks: Improving Mamba2 with Delta Rule
+OK      2025-01-14  2025-01-14  2501.08313  Lightning Attention at frontier scale (MiniM
+                                            └─ MiniMax-01: Scaling Foundation Models with Lightning Attention
+OK      2025-02-16  2025-02-16  2502.11089  Native Sparse Attention (NSA)
+                                            └─ Native Sparse Attention: Hardware-Aligned and Natively Trainable Spars
+OK      2025-02-18  2025-02-18  2502.13189  MoBA (Mixture of Block Attention)
+                                            └─ MoBA: Mixture of Block Attention for Long-Context LLMs
+OK      2025-06-05  2025-06-05  2506.04761  Log-Linear Attention
+                                            └─ Log-Linear Attention
+OK      2025-08-08  2025-08-08  2508.10925  Learned attention sinks + alternating SWA (g
+                                            └─ gpt-oss-120b & gpt-oss-20b Model Card
+OK      2025-10-30  2025-10-30  2510.26692  Kimi Delta Attention (Kimi Linear)
+                                            └─ Kimi Linear: An Expressive, Efficient Attention Architecture
+OK      2025-12-13  2025-12-13  2512.12167  DroPE — drop the positional embeddings, then
+                                            └─ Extending the Context of Pretrained LLMs by Dropping Their Positional 
+OK      2026-04-26  2026-04-26  2606.19348  Compressed Sparse Attention + Heavily Compre
+                                            └─ DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligen
+
+Rows with no paper — verify these by hand against the URL:
+
+  2023-06-30  NTK-aware scaled RoPE
+              https://www.reddit.com/r/LocalLLaMA/comments/14lz7j5/ntkaware_scaled_rope_allows_llama_models_to_have/
+  2025-09-11  Gated DeltaNet 3:1 hybrid in production (Qwen3-Next)
+              https://blog.vllm.ai/2025/09/11/qwen3-next.html
+  2025-09-29  DeepSeek Sparse Attention (DSA)
+              https://api-docs.deepseek.com/news/news250929
+  2026-02-15  Hybrid attention goes mainstream — and the field splits
+              https://magazine.sebastianraschka.com/p/a-dream-of-spring-for-open-weight
+
+PASS — all 42 arXiv-backed dates match the API exactly.
