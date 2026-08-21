@@ -3,7 +3,7 @@
 **Every attention mechanism from the ERA V5 Session 8 lesson, arranged by launch date, with the
 problem each one was answering and an honest account of what it costs.**
 
-- **Live app:** _(Netlify URL — see below)_
+- **Live app:** https://attention-in-order.netlify.app
 - **Source:** [`assignment-8/`](https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8)
 
 ---

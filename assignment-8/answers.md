@@ -2,7 +2,7 @@
 
 ## Question 1 — live app link and GitHub repo
 
-- **Live app:** _(Netlify URL)_
+- **Live app:** https://attention-in-order.netlify.app
 - **GitHub repo:** https://github.com/dattatreyamanjunath/ERA-V5 — code in
   [`assignment-8/`](https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8)
 
