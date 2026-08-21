@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Attention, in order — the write-up</title>
+<meta name="description" content="I put 46 attention mechanisms on one timeline by launch date. Six things became visible that a list hides — including that the 2019-2021 sparse-attention wave was ended by a CUDA kernel.">
+<meta name="author" content="Dattatreya Manjunath">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention, in order">
+<meta property="og:description" content="46 attention mechanisms on one timeline by launch date, and the six things that only become visible in date order.">
+<meta property="og:url" content="https://attention-in-order.netlify.app/writeup.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128065;&#65039;</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .article{max-width:46em;margin:0 auto;padding:0 22px}
+  .article h1{font-size:clamp(2rem,5vw,3rem);letter-spacing:-.03em;margin:0 0 .35em}
+  .article h2{font-size:clamp(1.25rem,2.6vw,1.6rem);margin:2.2em 0 .5em}
+  .article p,.article li{font-size:1.06rem;line-height:1.72}
+  .article ul{padding-left:1.2em}
+  .article hr{border:0;border-top:1px solid var(--line);margin:2.4em 0}
+  .article > p:first-of-type{font-size:1.16rem;color:var(--ink-2)}
+  .backlink{display:inline-block;margin-bottom:26px;font-size:.9rem}
+  .article code{background:var(--bg-3);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">Attention, <span>in order</span></div>
+    <nav class="topnav"><a href="index.html">&#8592; back to the interactive timeline</a></nav>
+  </div>
+</div>
+
+<section style="border-top:0;padding-top:56px">
+<article class="article">
+<a class="backlink" href="index.html">&#8592; The interactive version</a>
+<h1>Attention, in order</h1>
+
+<p><em>I put 46 attention mechanisms on a single timeline by launch date — not by family, not by how they’re usually taught. Six things became visible that a list completely hides. One of them is that the great sparse-attention wave of 2019–2021 was killed by a CUDA kernel.</em></p>
+
+<p>If you learned attention from a survey paper, you learned it as a taxonomy: here are the sparse ones, here are the linear ones, here are the positional encodings. That arrangement is tidy and it throws away the single most informative dimension in the data — <strong>when each one showed up</strong>.</p>
+
+<p>So I built the other version. Every mechanism from Bahdanau’s 2014 additive attention to DeepSeek-V4’s compressed sparse attention in April 2026, on one chronological axis, each one framed as an answer to a problem that existed <em>at that moment</em>.</p>
+
+<p>The app is here: <a href="https://attention-in-order.netlify.app">attention-in-order.netlify.app</a><br>
+The code and the full source table: <a href="https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8">github.com/dattatreyamanjunath/ERA-V5</a></p>
+
+<h2>Start with the thing everything else is modifying</h2>
+
+<p>Standard scaled dot-product attention is <code>softmax(QKᵀ/√dₖ + M)V</code>. Every token projects into a query, a key and a value; all pairs get scored in one matmul; a causal mask sets future scores to −∞; softmax turns each row into weights summing to one; the weighted sum of values is the output.</p>
+
+<p>It was never <em>wrong</em>. It was expensive, in two completely different ways, and confusing the two is the fastest route to picking the wrong technique:</p>
+
+<ul>
+<li><strong>Compute grows as T².</strong> Ten thousand tokens means one hundred million query–key scores. This hurts when you <em>process</em> a long input.</li>
+<li><strong>The KV cache grows as T.</strong> One saved key and value per earlier token, per layer. This hurts when you <em>serve</em> — and unlike model weights, which load once and are shared, every user’s conversation history is private to them.</li>
+</ul>
+
+<p>Almost every mechanism that follows attacks one of these and not the other. GQA does nothing for compute. FlashAttention does nothing for cache size. Reading them as competing “efficient attention” methods — which a taxonomy actively encourages — gets both of them wrong.</p>
+
+<h2>1. The compute panic ended in May 2022, and a kernel ended it</h2>
+
+<p>Between April 2019 and September 2020 the field shipped Sparse Transformer, Reformer, Longformer, Linformer, linear attention, BigBird and Performer. Seven separate assaults on T² in eighteen months.</p>
+
+<p>Then FlashAttention landed on 27 May 2022 and made <em>exact</em> attention 2–4× faster with O(T) memory instead of O(T²), by never materialising the score matrix at all. And that entire research line went quiet for roughly three years.</p>
+
+<p>None of those methods was refuted. They were made unnecessary. In a taxonomy FlashAttention looks like a footnote, because it changes precisely zero about the mathematics — it returns bit-for-bit identical results. On a timeline it is the event that explains a three-year hole.</p>
+
+<p>It also has a second-order effect that is easy to miss. A fused attention kernel cannot cheaply express an arbitrary per-pair attention bias. Shaw-style relative position tables are exactly that. RoPE and ALiBi are not — they fuse trivially. So a hardware constraint quietly settled a modelling argument, and the field standardised on the two schemes that happened to be kernel-friendly.</p>
+
+<h2>2. The bill people cared about switched in 2023, and you can date the switch</h2>
+
+<p>Everything before 2023 attacks FLOPs. Almost everything in 2023 attacks the KV cache: GQA in May, attention sinks in September, Mistral’s sliding window in October.</p>
+
+<p>Nothing about attention itself changed in between. <em>Deployment</em> changed. Once models were serving millions of concurrent conversations, the per-user private cache became the binding constraint, and the whole field pivoted inside about twelve months.</p>
+
+<h2>3. Position is a repair cycle, and DroPE is what the end of one looks like</h2>
+
+<p>Learned lookup table (May 2017) → sinusoidal (June 2017) → relative (March 2018) → RoPE (April 2021) → Position Interpolation (June 2023) → NTK-aware scaling (June 2023) → YaRN (August 2023) → DroPE (December 2025).</p>
+
+<p>Every entry from Position Interpolation onward is a patch on RoPE. Notice they arrive in a <em>cluster</em> — PI, NTK-aware and YaRN all land inside ten weeks in mid-2023, which is what a field looks like when everybody hits the same wall at the same time.</p>
+
+<p>Then DroPE arrives and argues the patches were the wrong move, because the positional embedding <em>itself</em> was the obstacle: drop it from every layer after pretraining and recalibrate for under 1% of the pretraining budget. That is the shape of a field about to abandon an assumption rather than patch it again.</p>
+
+<h2>4. Good ideas sit on a shelf waiting for their engineering</h2>
+
+<p>The delta rule — read what memory currently says, compute the difference, write only that — enters linear attention in <strong>February 2021</strong>. Then nothing happens for <strong>three years and four months</strong>.</p>
+
+<p>The reason is not that the idea was bad. It is that the update is sequential in its natural form, so it lost the parallel-scan trick that made linear attention trainable at scale. In June 2024 someone recognised the update as a generalised Householder transform and reparameterised it via the WY representation, which turns the chunk recurrence into matmuls. Gated DeltaNet follows six months later. Production deployment six months after that.</p>
+
+<p>In a list, the delta rule looks like a 2024 invention. On a timeline it is a 2021 idea that waited on a kernel — which reframes “can this be trained in parallel” from an implementation detail into a first-class architectural constraint. Linear attention itself has the same shape: proposed 2020, genuinely deployed 2025.</p>
+
+<h2>5. February 2025 shows simultaneous invention, which is the strongest signal you get</h2>
+
+<p><strong>NSA</strong> (DeepSeek, 16 Feb 2025) and <strong>MoBA</strong> (Moonshot, 18 Feb 2025) are two labs arriving at the same core idea — block-level sparsity trained <em>into</em> the model rather than bolted on at inference — and publishing <strong>two days apart</strong>.</p>
+
+<p>Independent simultaneous invention means the problem was fully ripe and the pieces were lying in the open. Nothing about an alphabetical list would tell you those two are the same moment. It is the single best predictor on the whole timeline that the direction was about to become mainstream — which it did: DSA that September, then DeepSeek-V4’s compressed sparse attention in April 2026.</p>
+
+<h2>6. The field has left recurrent state twice and come back for it twice</h2>
+
+<p>Laid out by date, the priorities read: exactness (2014–17) → compute (2018–20) → position gets solved and exact attention gets cheap again (2021–22) → decode memory (2023) → recurrent state returns (2024) → sparsity returns, now trained in (2025) → compression as the primary lever (2026).</p>
+
+<p>Techniques don’t die on this timeline. They wait for the piece they were missing. Fixed-size state was abandoned and reclaimed twice — first with gating added, so it could forget; then with the delta rule added, so it could correct. Sparsity was abandoned after FlashAttention and returned in 2025 as learned, trained-in selection rather than a hand-drawn pattern.</p>
+
+<h2>The part I got most wrong before checking</h2>
+
+<p>Dates are the easiest thing to get confidently wrong, so I didn’t trust my own recall for any of them. There’s a script in the repo that reads every arXiv ID out of the data file, queries the arXiv API, and asserts the stored date equals the <code>published</code> field — the v1 submission date. 42 of the 46 are machine-verified with zero mismatches; the other four have no paper behind them and are labelled individually rather than smoothed over.</p>
+
+<p>Three traps that caught me:</p>
+
+<ul>
+<li><strong>arXiv abstract pages show the latest revision at the top.</strong> “Attention Is All You Need” has a v7 dated 2 August 2023. Cite that and you place the Transformer after GPT-4. YaRN’s latest revision is dated February 2026, two and a half years after its v1.</li>
+<li><strong>Conference year is not publication date.</strong> Log-Linear Attention appeared at ICLR 2026 but was posted in June 2025 — a seven-month error if you cite the venue.</li>
+<li><strong>MQA is from 2019</strong>, four years before GQA. It’s routinely mis-dated to 2023, because that’s when it became widely used.</li>
+</ul>
+
+<h2>And one trap that is one character wide</h2>
+
+<p>Searching “DroPE arXiv” returns <strong>arXiv:2503.15029</strong> as the first hit. That paper is real, and it is not the one you want.</p>
+
+<ul>
+<li><strong>DRoPE</strong>, arXiv:2503.15029, 19 March 2025 — <em>Directional Rotary Position Embedding for Efficient Agent Interaction Modeling</em>. It adapts RoPE to encode agent <em>headings</em> for autonomous-driving trajectory models, evaluated on Waymo Open Motion and Argoverse 2. Nothing whatsoever to do with LLM context extension.</li>
+<li><strong>DroPE</strong>, arXiv:2512.12167, 13 December 2025 — <em>Extending the Context of Pretrained LLMs by Dropping Their Positional Embeddings</em>, from Sakana AI. This is the one.</li>
+</ul>
+
+<p>Nine months apart, different field, different mechanism, near-identical name. If you ask a model about DroPE and it answers fluently, this is the failure you should expect: a half-remembered technique with a confidently attached wrong paper.</p>
+
+<h2>So what comes next?</h2>
+
+<p>Extrapolating the slope rather than claiming knowledge. The 2026 cluster is the interesting datum: inside three weeks, Qwen3.5, GLM-5, Ling 2.5 and MiniMax M2.5 shipped four <em>different</em> attention stacks and all four were competitive. That disagreement is evidence the choice is workload-dependent rather than solved.</p>
+
+<p>Three things the shape suggests. The fixed-size state gives way to a growing-but-sublinear one — Log-Linear Attention is already prototyping O(log T) hierarchical state. The schedule ratio stops being inherited; 3:1 and D-D-D-G are currently copied rather than measured, and nobody has run the ablation. And compression moves earlier still, out of the KV cache and into tokenisation, because the cheapest token remains the one you never spend.</p>
+
+<p>The honest caveat is that this timeline’s own record says the next move often arrives as a kernel rather than an equation, and nobody predicts those.</p>
+
+<hr>
+
+<p><em>The interactive version — where the attention demo computes real attention in your browser rather than illustrating it, and every date carries its source — is at <a href="https://attention-in-order.netlify.app">attention-in-order.netlify.app</a>. Code, the verification script and the full 46-row source table are on <a href="https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8">GitHub</a>. Built for Session 8 of <a href="https://theschoolofai.in">The School of AI</a>’s ERA V5.</em></p>
+</article>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="small">
+      Interactive version: <a href="index.html">the timeline</a> ·
+      Source and the full 46-row citation table:
+      <a href="https://github.com/dattatreyamanjunath/ERA-V5/tree/main/assignment-8">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
