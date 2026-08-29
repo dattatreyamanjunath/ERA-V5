@@ -1,6 +1,6 @@
 # Assignment 9 — Making the Training Harness Correct and Observable
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dattatreyamanjunath/ERA-V5/blob/main/assignment-9/llm_harness.ipynb)
+Notebook: [`llm_harness.ipynb`](llm_harness.ipynb) — runs top to bottom (`Runtime → Run all` in Colab, or executed locally as below). Trained and logged locally on CPU; no Colab upload needed to grade this.
 
 Starting point: a three-line next-token training harness —
 
@@ -13,22 +13,62 @@ loss = cross_entropy(
 )
 ```
 
-— rebuilt piece by piece so that every step prints something you can verify by eye instead of trusting the code.
+— rebuilt piece by piece so every step prints something verifiable: a named shape, a token string next to its target string, a token count that visibly changes under a mask. All numbers below are copied straight from an actual local run's logs (`llm_harness.ipynb`, cells 5–16), nothing hand-typed.
 
-## Part 1 — the harness
+## On the warning
 
-1. **Every tensor shape, named.** A `describe()` helper prints each tensor's shape with a one-line meaning per axis (batch, seq_len, d_model, vocab_size), all the way from raw `tokens` through the shifted, flattened `flat_logits`/`flat_targets` that go into `cross_entropy`.
-2. **Verify the shift with strings.** The GPT-2 BPE tokenizer (`tiktoken`) decodes each input/target id pair to real sub-word strings, printed side by side, so an off-by-one is visible as a word, not buried in integers.
-3. **Mask padding.** Two sequences of different lengths are padded to a common length; the loss is computed with and without an `ignore_index=-100` mask on the pad targets, and the count of tokens actually contributing to the loss is shown to shrink.
-4. **Pack two documents, mask the boundary.** Two unrelated documents are concatenated into one sequence. Naively, the model can both attend across the boundary and is asked to predict document B's first token from document A's last token — a fabricated dependency. The notebook fixes both (a document-aware attention mask baked into the model, and `-100` on the boundary label) and explains why the effect is small at random initialization but real and growing once training starts.
-5. **Perplexity sanity check.** An untrained model's loss should sit near `ln(vocab_size)`, i.e. perplexity near `vocab_size` — the softmax of small random logits is close to uniform. The notebook checks this and explains what a bug (loss far from that value) would look like.
-6. **Tied vs. untied head.** Compares total parameter counts with `output_head.weight` tied to the token embedding vs. given its own matrix; the difference is exactly `vocab_size * d_model`.
-7. **Peak memory: ordinary vs. chunked cross-entropy.** A hand-written chunked cross-entropy (in the spirit of fused linear-cross-entropy kernels) never materializes the full `(batch, seq_len, vocab_size)` logits tensor at once. Peak memory is measured exactly via `torch.cuda.max_memory_allocated()` on GPU, or approximated via `psutil` RSS polling on CPU (not `tracemalloc`, which doesn't see native tensor memory at all).
+> A target shift in the incorrect direction can produce a beautiful loss curve.
 
-## Part 2 — a second head, predicting `t+2`
+Took this literally: the notebook trains two identical models on a tiny corpus for 80 steps, one on the correct objective (`logits[:, :-1]` vs. `tokens[:, 1:]`, predict the next token) and one on the classic off-by-one (`logits[:, :-1]` vs. `tokens[:, :-1]`, predict the token that was just fed in — a copy task, not a language model). The loss numbers alone do not give the bug away:
 
-A second output head is bolted onto the same transformer trunk, reading the same hidden states but trained to predict the token **two** positions ahead instead of one. Both losses are logged separately and summed for the optimizer step, then plotted over ~300 training steps on the public-domain Tiny Shakespeare corpus. The `t+2` head consistently trails the `t+1` head and the gap widens over training — explained via the higher irreducible entropy of predicting further into the future from the same hidden state.
+| step | correct (predict t+1) | buggy (predict t) |
+|---|---|---|
+| 0  | 10.8210 | **10.5677** (lower — a free head start from the identity shortcut through the residual stream) |
+| 20 | 8.9209  | 8.3005 |
+| 40 | 7.2907  | 7.1012 |
+| 60 | 5.8126  | **5.9136** (correct has now caught up) |
+| 79 | 4.4528  | 4.6383 |
+
+The buggy objective starts out *lower* — exactly the "beautiful loss curve" the warning describes — because copying a token is a strictly easier function than predicting the next one. On this run it's overtaken by step 60 only because the demo corpus is small enough to memorize; on real, non-repeating data the copy task's head start wouldn't go away. Either way, no loss number at any step tells you which curve is which. What does: printing the actual input/target strings for the buggy run —
+
+```
+0   'A'        ->  'A'         <-- input == target
+1   ' watched' ->  ' watched'  <-- input == target
+2   ' pot'     ->  ' pot'      <-- input == target
+```
+
+— every pair identical, obvious on sight, invisible in the loss. Item 2 below is this same check applied to the real harness, confirming it does *not* have this bug.
+
+## Part 1 — the seven numbers
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Loss on a 19-token sample sentence, harness wired as given | **10.9496** |
+| 2 | Input→target string pairs verified by eye (`'The'→' quick'`, `' quick'→' brown'`, …, `' April'→'.'`) | **18 / 18 correctly shifted, 0 misaligned** |
+| 3 | Contributing tokens, batch of 2 padded sequences: unmasked → masked | **26 → 15** (loss 10.9315 → 10.9088) |
+| 4 | Packed 2-document loss: naive (attends + counts the boundary) vs. fully fixed (blocked attention + boundary label masked) | **10.8468 (n=20) → 10.8316 (n=19)** |
+| 5 | Perplexity of the untrained model vs. vocab size | **54,344.6** vs. **50,259** (ratio 1.081) |
+| 6 | Total parameters, tied vs. untied output head | **7,234,688 → 13,667,840** (Δ = 6,433,152 = vocab_size × d_model, exactly) |
+| 7 | Peak memory, ordinary vs. hand-written chunked cross-entropy (same inputs, isolated subprocesses) | **598.23 MB → 325.93 MB** (1.84×) |
+
+Item 7 note: the first version of this measurement polled RSS on a background thread for both calls *within one process*, and two runs of it disagreed about which method used more memory — PyTorch's CPU allocator doesn't return freed memory to the OS, so whichever function ran second inherited a polluted baseline. Fixed by running each measurement in its own fresh subprocess; the 1.84× result above then reproduced consistently across repeated runs (598–617 MB vs. 326 MB every time). Worth stating since it's the same lesson as the headline warning, one level up: an unverified measurement can look fine and still be wrong.
+
+## Part 2 — the two losses
+
+A second head (`head_t2`, untied) reads the same trunk hidden states and predicts `t+2` instead of `t+1`; both losses are logged separately and summed for the optimizer step, trained 300 steps on Tiny Shakespeare:
+
+| | loss (mean, last 20 steps) |
+|---|---|
+| `head_t1` (predict t+1) | **5.657** |
+| `head_t2` (predict t+2) | **5.932** |
+
+Both start within 0.04 of each other near `ln(vocab_size) ≈ 10.83` (10.813 vs. 10.857 at step 0 — neither head has learned anything yet), then `head_t1` pulls ahead and the gap widens over training (0.275 by the last 20 steps, up from ~0.04 at the start). Predicting two tokens ahead from the same hidden state is a strictly harder, higher-entropy problem than predicting the very next one — every extra step into the future is another chance for the target to depend on something other than the current position — so `head_t2` both converges to a worse asymptote and gets there more slowly, sharing the same trunk representation the whole time.
 
 ## Running it
 
-Open [`llm_harness.ipynb`](llm_harness.ipynb) in Colab via the badge above, or run it locally with `torch`, `tiktoken`, `psutil`, and `matplotlib` installed. CPU is fine for Part 1; Part 2's training loop is faster with a T4 GPU (`Runtime → Change runtime type`).
+```bash
+pip install torch tiktoken psutil matplotlib
+jupyter nbconvert --to notebook --execute llm_harness.ipynb
+```
+
+CPU is fine (~6–7 minutes total, mostly Part 2's 300-step loop); a GPU runtime gets an exact CUDA peak-memory reading in item 7 instead of the subprocess/psutil fallback.
