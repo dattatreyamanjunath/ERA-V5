@@ -1,28 +1,32 @@
 # Assignment 14: Dense GPT -> Mixture-of-Experts (sparse upcycling)
 
-Trained on a Colab T4 (driven through Claude in Chrome). Notebook with outputs: [moe_upcycling_executed.ipynb](moe_upcycling_executed.ipynb). Raw numbers: [results.json](results.json).
+Trained on a Colab T4 (driven through Claude in Chrome). Executed notebook: [moe_upcycling_executed.ipynb](moe_upcycling_executed.ipynb). Numbers: [results.json](results.json).
 
 ## Setup
-- Data: Tiny Shakespeare (1.1M chars, char-level, vocab 65), 90/10 train/val split.
-- Model: 6-layer GPT, d=384, 6 heads, ctx 256, **10.8M params**, plain `nn.Linear` MLPs. Batch 64x256 tokens, AdamW, cosine LR, bf16/fp16 autocast.
-- **Phase 1 (dense):** 2500 steps, lr 1e-3.
-- **Conversion:** every block's MLP becomes an MoE layer with 8 experts, top-2 routing. Each expert is a copy of the trained dense MLP (+1% noise to break symmetry); the router is a fresh small-random `Linear(384, 8)`. Result: **60.4M total params, 17.9M active per token**. Switch-style load-balancing loss (weight 0.01).
-- **Phase 2 (MoE):** 2000 more steps at lr 3e-4. A **control** copy of the dense model gets the same 2000 steps and schedule.
+- **Data:** 120M bytes of WikiText-103 (byte-level, vocab 256), 99/1 train/val split. Each step uses 64x256 = 16k tokens and batches are random crops, so every model trains on **well under one epoch** (dense phase 33M tokens, 57M tokens by the end of the MoE/control phase vs 119M available). Nothing is repeated, so there is no memorisation: val loss tracks train loss.
+- **Model:** 6-layer GPT, d=384, 6 heads, ctx 256, **10.9M params**, plain `nn.Linear` MLPs. AdamW, cosine LR, fp16 autocast + GradScaler.
+- **Phase 1 (dense):** 2000 steps, lr 1e-3.
+- **Conversion:** each block's MLP becomes an MoE layer with 8 experts, top-2 routing. Every expert is a copy of the trained dense MLP (+1% noise); the router is a fresh small-random `Linear(384, 8)`. Result: **60.6M total params, 18.1M active per token**. Switch-style load-balancing loss (weight 0.01).
+- **Phase 2:** 1500 more steps at lr 3e-4 for the MoE. A **dense control** copy gets the same 1500 steps and schedule.
 
-## Results
-| | step | train loss | val loss |
-|---|---|---|---|
-| Dense, start | 0 | 4.301 | 4.293 |
-| Dense, best val | 1000 | 1.184 | 1.546 |
-| Dense, end of phase 1 | 2500 | 0.594 | 2.164 |
-| **MoE right after conversion** | 2500 | **0.590** | 2.153 |
-| MoE, end | 4500 | **0.095** | 3.843 |
-| Dense control, end | 4500 | 0.175 | 3.717 |
+## Results (val loss, 100-step eval interval)
+| | step | val loss |
+|---|---|---|
+| Dense, start | 0 | 5.711 |
+| Dense, end of phase 1 | 2000 | 1.275 |
+| **MoE right after conversion** | 2000 | **1.282** |
+| MoE, end | 3500 | **1.208** |
+| Dense control, end | 3500 | 1.237 |
 
-- The conversion is function-preserving: loss right after it matches the dense model (train 0.594 -> 0.590).
-- After conversion the MoE keeps training: **train loss falls 0.590 -> 0.095**, faster than the dense control (0.175), which is what the extra capacity buys.
+Train loss at the start of phase 2 (step 2001): MoE 1.261, control 1.265. At the end: MoE 1.184, control 1.213.
 
 ![loss curve](loss_curve.png)
 
-## Caveat: this run overfits
-Tiny Shakespeare is only ~1M characters. Phase 1 alone sees ~40M tokens (about 36 epochs), so the dense model already overfits: val loss bottoms out at 1.546 around step 1000, then rises. Past the conversion, both the MoE and the control just memorise the training set, so **validation loss goes up while train loss goes down**. The MoE memorises faster than the control (more capacity), which is why its val is slightly worse (3.84 vs 3.72). The train-loss claim above holds; no generalization gain is claimed. A fair test of whether upcycling improves held-out loss would need a larger corpus or dropout, and a shorter dense phase (stopped near step 1000).
+- The conversion barely changes the loss (val 1.275 -> 1.282; the small bump is the fresh router and expert noise).
+- After conversion the MoE **keeps training: val 1.287 -> 1.208 and train 1.261 -> 1.184**, and it ends ahead of the dense control by 0.03 on val (1.208 vs 1.237) for the same number of steps.
+- The gap is modest and comes from a single seed, so treat it as indicative, not conclusive. The MoE does pay for it: it is about 1 s/step on the T4 vs about 0.4 s/step for the control (Python loop over 8 experts, no fused kernels).
+
+## Notes on this run
+- An earlier run on Tiny Shakespeare (1M chars) overfit badly after ~1000 steps, so val loss rose while train loss fell. It was replaced by this run on a much larger dataset, with every model kept under one epoch.
+- Speed: bf16 autocast is emulated on T4 and slow; switching to fp16 + GradScaler made the dense phase roughly 3x faster. Local (Apple M1, MPS) was far slower than the T4 and was not used.
+- Logging gap: the Colab runtime disconnected after the run finished, which dropped `results.json` from the VM and reset part of the notebook's printed output. The notebook therefore only shows dense log lines for steps 0-500 and has no output for the conversion cell. The plot and the MoE/control logs are complete, and the dense end value (1.275) and post-conversion value (1.282) come from the notebook's final summary line. Dense train loss at step 2000 and the parameter counts were not captured in the output; the counts above were recomputed locally from the same model code.
