@@ -1,0 +1,9 @@
+{
+  "id": "inline-comments",
+  "name": "Inline Comments",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Google Docs / Confluence style comments: turn on comment mode, select text, click the comment button. Threads, replies and resolve live in a sidebar.",
+  "author": "You",
+  "isDesktopOnly": false
+}
